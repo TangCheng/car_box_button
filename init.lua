@@ -1,7 +1,22 @@
 print("\n")
 print("Car Box Started")
 
-local files = {"main", "button", "config", "server", "client", "indicator"}
+local files = {
+    "main",
+    "button",
+    "config",
+    "server",
+    "server-error",
+    "server-basicauth",
+    "server-conf",
+    "server-static",
+    "server-header",
+    "server-connection",
+    "server-request",
+    "server-b64decode",
+    "client",
+    "indicator"
+}
 local luafile = nil
 local exefile = "main"
 

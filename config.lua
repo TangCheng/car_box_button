@@ -9,9 +9,9 @@ local NETWORK_PWD_CONF = "network_pwd.conf"
 local CAR_BOX_SERVER_URI_CONF = "car_box_server_uri.conf"
 
 local config_files = {
-    config.SSID = NETWORK_SSID_CONF,
-    config.PWD = NETWORK_PWD_CONF,
-    config.URI = CAR_BOX_SERVER_URI_CONF
+    [config.SSID] = NETWORK_SSID_CONF,
+    [config.PWD] = NETWORK_PWD_CONF,
+    [config.URI] = CAR_BOX_SERVER_URI_CONF
 }
 
 function config_trim(s) 
