@@ -12,9 +12,11 @@ function post_data()
     else
         print("failed to encode!")
     end
-    http.post("http://" .. parameter[config.URI] .. "/post",
+    local url = 'http://' .. parameter[config.URI] .. '/post'
+    print(url)
+    http.post(url,
         'Content-Type: application/json\r\n',
-        json,
+        '{"test":"value"}',
         function(code, data)
             if (code < 0) then
                 print("HTTP request failed")
