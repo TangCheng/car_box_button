@@ -1,4 +1,5 @@
 local indicator = require("indicator")
+local config = require("config")
 
 -- httpserver
 -- Author: Marcos Kirsch
@@ -98,6 +99,21 @@ return function (port)
                         fileServeFunction = dofile("server-static.lc")
                     else
                         uri.args = {code = 405, errorString = "Method not supported"}
+                        fileServeFunction = dofile("server-error.lc")
+                    end
+                end
+
+                if method == "POST" then
+                    if uri.file == "configuration" then
+                        local requestData = req.getRequestData(req) 
+                        --for k, v in pairs(requestData) do
+                        --    print(k .. ":" .. v)
+                        --end
+                        config.write(requestData)
+                        dofile("server-header.lc")(connection, 200, nil, nil)
+                        node.restart()
+                    else
+                        uri.args = {code = 404, errorString = "Not Found"}
                         fileServeFunction = dofile("server-error.lc")
                     end
                 end

@@ -21,6 +21,7 @@ end
 function config_trimrn(s)
     s = string.gsub(s, "\r", "")
     s = string.gsub(s, "\n", "")
+    return s
 end
 
 function config_iscontain(set, key)
@@ -38,18 +39,20 @@ function config_check_exists()
     return true
 end
 
-function config_write_content(file, content)
-    if file.open(config_files[file], "w+") then
-        file.writeln(content)
+function config_write_content(filename, content)
+    print(config_files[filename])
+    if file.open(config_files[filename], "w+") then
+        file.writeline(content)
         file.flush()
         file.close()
     end
 end
 
-function config_read_content(file)
+function config_read_content(filename)
     local content = nil
-    if file.open(file) then
-        content = file.readln()
+    print("config_read_content: " ..filename)
+    if file.open(filename) then
+        content = file.readline()
         file.close()
     end
     if content then
@@ -63,6 +66,7 @@ function config_check_content()
     local content = nil
     for k, f in pairs(config_files) do
         content = config_read_content(f)
+        print(content)
         if content then
             if string.len(content) == 0 then
                 return false
@@ -71,6 +75,7 @@ function config_check_content()
             return false
         end
     end
+    return true
 end
 
 function config.check()
@@ -85,12 +90,19 @@ function config.write(conf)
     local config_fields = {config.SSID, config.PWD, config.URI}
     for _, field in ipairs(config_fields) do
         if config_iscontain(conf, field) then
+            print("write config to file: " .. field .. "-" .. conf[field])
             config_write_content(field, conf[field])
         end
     end
 end
 
 function config.read()
+    local conf = {}
+    local config_fields = {config.SSID, config.PWD, config.URI}
+    for _, field in ipairs(config_fields) do
+        conf[field] = config_read_content(config_files[field])
+    end
+    return conf
 end
 
 return config

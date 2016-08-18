@@ -21,12 +21,12 @@ end
 
 function indicator.on()
     tmr.stop(ALARM)
-    gpio.write(LED, gpio.LOW)
+    gpio.write(LED, gpio.HIGH)
 end
 
 function indicator.off()
     tmr.stop(ALARM)
-    gpio.write(LED, gpio.HIGH)
+    gpio.write(LED, gpio.LOW)
 end
 
 flash_flag = true
@@ -38,10 +38,10 @@ function indicator.flash(speed)
         tmr.alarm(ALARM, SPEED[speed], 1, function()
             if flash_flag then
                 flash_flag = false
-                gpio.write(LED, gpio.LOW)
+                gpio.write(LED, gpio.HIGH)
             else
                 flash_flag = true
-                gpio.write(LED, gpio.HIGH)
+                gpio.write(LED, gpio.LOW)
             end
         end)
     end
