@@ -6,13 +6,24 @@ local joinCounter = 0
 local joinMaxAttempts = 5
 
 function post_data()
-    ok, json = pcall(cjson.encode, {test="value"})
+    --{
+        --"button": num,
+        --"geo": {
+            --"lat": 22.9999922,
+            --"lng": 114.0000000
+        --}
+    --}
+    latitude = math.random(89) + math.random()
+    latitude = tonumber(string.format("%.7f", latitude))
+    longitude = math.random(179) + math.random()
+    longitude = tonumber(string.format("%.7f", longitude))
+    ok, json = pcall(cjson.encode, {button = 1, geo = {lat = latitude, lng = longitude}})
     if ok then
         print(json)
     else
         print("failed to encode!")
     end
-    local url = 'http://' .. parameter[config.URI] .. '/post'
+    local url = 'http://' .. parameter[config.URI]
     print(url)
     http.post(url,
         'Content-Type: application/json\r\n',
